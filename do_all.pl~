@@ -1,0 +1,20 @@
+#!/usr/bin/perl
+
+
+open(OUT,">do_all.sh");
+open(FH,"<get_mag_cubes_MUSE.csv");
+while($line=<FH>) {
+    chop($line);
+    if ($line !~ "#") {
+	my @data=split(",",$line);
+	$name=$data[0];
+	$red=$data[1];
+#tsp ./ccf_IFS.py /nfs/ofelia/disk-b/sanchez/MUSE/AMUSING/analysis/all_files_SSP/NGC6754/GAS.NGC6754.cube.fits.gz 0.0108135094985313 2.6 NGC6754.Ha_NII 0  /disk-d/manga/carlos/ccf_products/MUSE_ccf_200620/ccf_dataproducts/	
+	$call="tsp ./ccf_IFS.py  /nfs/ofelia/disk-b/sanchez/MUSE/AMUSING/analysis/all_files_SSP/".$name."/GAS.".$name.".cube.fits.gz ".$red." 2.6 ".$name.".Ha_NII 0 /disk-d/manga/carlos/ccf_products/MUSE_ccf_200620/ccf_dataproducts/";
+	print OUT "$call\n";
+    }
+}
+close(FH);
+close(OUT);
+
+exit;
